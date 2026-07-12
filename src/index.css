@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Geometric Balance Themed Colors */
+  --color-brand-bg: #FAF9F6;           /* Soft Alabaster Cream */
+  --color-brand-ink: #1A1A1A;          /* Deep Charcoal Ink */
+  --color-brand-primary: #A62C2B;      /* Terracotta / Crimson Accent Red */
+  --color-brand-hover: #80201F;        /* Crimson Red Hover */
+  --color-brand-green: #2D5A27;        /* Muted Forest Green */
+  --color-brand-border: #E5E4E0;       /* Soft Light Chalk Border */
+  --color-brand-gold: #b45309;         /* Italian Gold Accent */
+  --color-brand-accent: #FAF9F6;
+  --color-brand-card-bg: #FFFFFF;
+}
+
+@layer base {
+  body {
+    @apply font-sans bg-brand-bg text-brand-ink antialiased selection:bg-rose-100 selection:text-brand-primary;
+  }
+}
+
+/* Custom scrollbars for a premium feel */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E4E0;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A62C2B;
+}
+

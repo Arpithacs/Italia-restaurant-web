@@ -1,0 +1,6 @@
+{
+  "name": "Italia Restaurant",
+  "description": "Full-stack Italian restaurant ordering application with interactive menu, cart customization, user authentication, and order confirmations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
