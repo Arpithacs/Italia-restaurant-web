@@ -5,7 +5,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'italia-fallback-secret-key-12345';
 
 export interface AuthenticatedRequest extends Request {
   user?: {
-    id: number;
+    id: string | number;
     email: string;
     name: string;
   };

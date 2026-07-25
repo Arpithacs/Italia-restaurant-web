@@ -1,34 +1,35 @@
 import { Router, Response } from 'express';
-import db from '../db';
+import { Order } from '../models/Order';
+import { MenuItem } from '../models/MenuItem';
 import { authMiddleware, AuthenticatedRequest } from '../middleware/auth';
 
 const router = Router();
 
 // POST /api/orders
 // Submit a brand new food order
-router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
+router.post('/', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
     if (!userId) {
-       res.status(401).json({ error: 'User is not authenticated.' });
-       return;
+      res.status(401).json({ error: 'User is not authenticated.' });
+      return;
     }
 
     const { items } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
-       res.status(400).json({ error: 'Order must contain at least one item.' });
-       return;
+      res.status(400).json({ error: 'Order must contain at least one item.' });
+      return;
     }
 
-    // Begin database transaction for atomic inserts and queries
     let total = 0;
     const validatedItems: Array<{
-      menuItemId: number;
+      menuItem: any;
       quantity: number;
       customization: string;
       unitPrice: number;
       name: string;
+      image: string;
     }> = [];
 
     // Verify all menu items exist and lookup reliable prices
@@ -36,106 +37,93 @@ router.post('/', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
       const { menuItemId, quantity, customization } = item;
 
       if (!menuItemId || !quantity || typeof quantity !== 'number' || quantity <= 0) {
-         res.status(400).json({ error: 'Invalid item format or quantity.' });
-         return;
+        res.status(400).json({ error: 'Invalid item format or quantity.' });
+        return;
       }
 
-      // Query database for item info
-      const menuItem = db.prepare('SELECT id, name, price FROM menu_items WHERE id = ?').get(menuItemId) as {
-        id: number;
-        name: string;
-        price: number;
-      } | undefined;
+      const menuItem = await MenuItem.findById(menuItemId);
 
       if (!menuItem) {
-         res.status(400).json({ error: `Menu item with id ${menuItemId} does not exist.` });
-         return;
+        res.status(400).json({ error: `Menu item with id ${menuItemId} does not exist.` });
+        return;
       }
 
       const itemTotal = menuItem.price * quantity;
       total += itemTotal;
 
       validatedItems.push({
-        menuItemId: menuItem.id,
+        menuItem: menuItem._id,
         quantity,
         customization: customization || '',
         unitPrice: menuItem.price,
-        name: menuItem.name
+        name: menuItem.name,
+        image: menuItem.image
       });
     }
 
-    // Write order and individual order items inside a database transaction
-    const runInTransaction = db.transaction(() => {
-      // 1. Insert order record
-      const orderInsert = db.prepare('INSERT INTO orders (user_id, total, status) VALUES (?, ?, ?)')
-        .run(userId, total, 'placed');
-      
-      const orderId = Number(orderInsert.lastInsertRowid);
-
-      // 2. Insert nested order item details
-      const itemInsert = db.prepare(`
-        INSERT INTO order_items (order_id, menu_item_id, quantity, customization, unit_price)
-        VALUES (?, ?, ?, ?, ?)
-      `);
-
-      for (const item of validatedItems) {
-        itemInsert.run(orderId, item.menuItemId, item.quantity, item.customization, item.unitPrice);
-      }
-
-      return orderId;
-    });
-
-    const orderId = runInTransaction();
-
-    res.status(201).json({
-      id: orderId,
-      userId,
+    // Save order in MongoDB
+    const userIdStr = String(userId);
+    const newOrder = await Order.create({
+      user: userIdStr,
       total,
       status: 'placed',
       items: validatedItems
     });
+
+    res.status(201).json({
+      id: (newOrder as any)._id.toString(),
+      userId: userIdStr,
+      total,
+      status: (newOrder as any).status,
+      items: validatedItems.map(i => ({
+        menuItemId: i.menuItem.toString(),
+        quantity: i.quantity,
+        customization: i.customization,
+        unitPrice: i.unitPrice,
+        name: i.name,
+        image: i.image
+      }))
+    });
   } catch (err) {
-    console.error('Error inserting order:', err);
+    console.error('Error inserting order into MongoDB:', err);
     res.status(500).json({ error: 'Internal server error while placing the order.' });
   }
 });
 
 // GET /api/orders/me
 // Retrieve previous orders submitted by the authenticated user
-router.get('/me', authMiddleware, (req: AuthenticatedRequest, res: Response) => {
+router.get('/me', authMiddleware, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const userId = req.user?.id;
     if (!userId) {
-       res.status(401).json({ error: 'User is not authenticated.' });
-       return;
+      res.status(401).json({ error: 'User is not authenticated.' });
+      return;
     }
 
+    const userIdStr = String(userId);
+
     // Query list of user's orders, sorted by most recent
-    const orders = db.prepare('SELECT id, total, status, created_at FROM orders WHERE user_id = ? ORDER BY created_at DESC').all(userId) as Array<{
-      id: number;
-      total: number;
-      status: string;
-      created_at: string;
-    }>;
+    const orders = await Order.find({ user: userIdStr as any }).sort({ createdAt: -1 });
 
-    // Fetch items matching each order
-    const populatedOrders = orders.map(order => {
-      const items = db.prepare(`
-        SELECT oi.id, oi.menu_item_id, oi.quantity, oi.customization, oi.unit_price, mi.name, mi.image
-        FROM order_items oi
-        JOIN menu_items mi ON oi.menu_item_id = mi.id
-        WHERE oi.order_id = ?
-      `).all(order.id);
-
-      return {
-        ...order,
-        items
-      };
-    });
+    const populatedOrders = orders.map(order => ({
+      id: (order as any)._id.toString(),
+      total: order.total,
+      status: order.status,
+      created_at: order.createdAt,
+      items: order.items.map((item: any) => ({
+        id: item._id ? item._id.toString() : item.menuItem.toString(),
+        menu_item_id: item.menuItem ? item.menuItem.toString() : '',
+        quantity: item.quantity,
+        customization: item.customization || '',
+        unit_price: item.unitPrice,
+        name: item.name,
+        image: item.image || ''
+      }))
+    }));
 
     res.json(populatedOrders);
   } catch (err) {
-    console.error('Error loading historic orders:', err);
+    console.error('Error loading historic orders from MongoDB:', err);
     res.status(500).json({ error: 'Internal server error while retrieving order history.' });
   }
 });

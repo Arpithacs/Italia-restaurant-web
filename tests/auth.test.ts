@@ -1,31 +1,19 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-// Override database path before any database connection starts
-const testDbPath = path.join(process.cwd(), 'test_auth.sqlite');
-process.env.DATABASE_PATH = testDbPath;
-process.env.JWT_SECRET = 'test-suite-super-secret-key-99999';
-
 import request from 'supertest';
 import app from '../server/app';
-import db from '../server/db';
+import { connectDB } from '../server/db';
+import mongoose from 'mongoose';
+import { User } from '../server/models/User';
 
 describe('Authentication Suite', () => {
-  beforeAll(() => {
-    // Make sure tables exist and are seeded
-    db.exec(`
-      DELETE FROM users;
-    `);
+  beforeAll(async () => {
+    process.env.JWT_SECRET = 'test-suite-super-secret-key-99999';
+    await connectDB();
+    await User.deleteMany({});
   });
 
-  afterAll(() => {
-    db.close();
-    if (fs.existsSync(testDbPath)) {
-      try {
-        fs.unlinkSync(testDbPath);
-      } catch (err) {
-        console.error('Failed to clean up test database file:', err);
-      }
+  afterAll(async () => {
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
     }
   });
 

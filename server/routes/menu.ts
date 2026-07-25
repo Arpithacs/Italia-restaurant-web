@@ -1,34 +1,49 @@
 import { Router, Request, Response } from 'express';
-import db from '../db';
+import { MenuItem } from '../models/MenuItem';
 
 const router = Router();
 
 // GET /api/menu
-router.get('/', (req: Request, res: Response) => {
+router.get('/', async (req: Request, res: Response) => {
   try {
-    const items = db.prepare('SELECT id, name, description, price, image, taste FROM menu_items').all();
-    res.json(items);
+    const items = await MenuItem.find();
+    const formatted = items.map(item => ({
+      id: item._id.toString(),
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      image: item.image,
+      taste: item.taste
+    }));
+    res.json(formatted);
   } catch (err) {
     console.error('Error fetching menu:', err);
-    res.status(500).json({ error: 'Internal server error while fetching the menu.' });
+    res.status(500).json({ error: 'Failed to retrieve menu list.' });
   }
 });
 
 // GET /api/menu/:id
-router.get('/:id', (req: Request, res: Response) => {
+router.get('/:id', async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const item = db.prepare('SELECT id, name, description, price, image, taste FROM menu_items WHERE id = ?').get(id);
+    const item = await MenuItem.findById(id);
     
     if (!item) {
-       res.status(404).json({ error: `Menu item with id ${id} not found.` });
-       return;
+      res.status(404).json({ error: `Menu item with id ${id} not found.` });
+      return;
     }
-    
-    res.json(item);
+
+    res.json({
+      id: item._id.toString(),
+      name: item.name,
+      description: item.description,
+      price: item.price,
+      image: item.image,
+      taste: item.taste
+    });
   } catch (err) {
-    console.error('Error fetching menu item:', err);
-    res.status(500).json({ error: 'Internal server error while fetching the menu item.' });
+    console.error(`Error fetching menu item ${req.params.id}:`, err);
+    res.status(500).json({ error: 'Internal server error fetching menu item.' });
   }
 });
 

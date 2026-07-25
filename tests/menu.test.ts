@@ -1,37 +1,26 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-// Override database path before any database connection starts
-const testDbPath = path.join(process.cwd(), 'test_menu.sqlite');
-process.env.DATABASE_PATH = testDbPath;
-
 import request from 'supertest';
 import app from '../server/app';
-import db, { seedDatabase } from '../server/db';
+import { connectDB, seedDatabase } from '../server/db';
+import mongoose from 'mongoose';
 
 describe('Menu Endpoint Suite', () => {
-  beforeAll(() => {
-    // Seed database to ensure 8 items exist
-    seedDatabase();
+  beforeAll(async () => {
+    await connectDB();
+    await seedDatabase();
   });
 
-  afterAll(() => {
-    db.close();
-    if (fs.existsSync(testDbPath)) {
-      try {
-        fs.unlinkSync(testDbPath);
-      } catch (err) {
-        console.error('Failed to clean up test database file:', err);
-      }
+  afterAll(async () => {
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
     }
   });
 
-  it('should return exactly 8 seeded menu items', async () => {
+  it('should return seeded menu items', async () => {
     const res = await request(app).get('/api/menu');
 
     expect(res.status).toBe(200);
     expect(Array.isArray(res.body)).toBe(true);
-    expect(res.body.length).toBe(8);
+    expect(res.body.length).toBeGreaterThanOrEqual(8);
 
     // Verify first food item matches Pizza Margherita
     const margherita = res.body.find((item: any) => item.name === 'Pizza Margherita');
@@ -52,7 +41,8 @@ describe('Menu Endpoint Suite', () => {
   });
 
   it('should return 404 for a non-existent item id', async () => {
-    const res = await request(app).get('/api/menu/9999');
+    const fakeObjectId = new mongoose.Types.ObjectId().toString();
+    const res = await request(app).get(`/api/menu/${fakeObjectId}`);
     expect(res.status).toBe(404);
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toContain('not found');

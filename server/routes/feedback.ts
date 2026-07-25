@@ -1,22 +1,21 @@
 import { Router, Request, Response } from 'express';
-import db from '../db';
+import { FeedbackMessage } from '../models/FeedbackMessage';
 
 const router = Router();
 
 // POST /api/feedback
-router.post('/', (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   try {
     const { message, rating } = req.body;
 
     if (!message) {
-       res.status(400).json({ error: 'Feedback message is required.' });
-       return;
+      res.status(400).json({ error: 'Feedback message is required.' });
+      return;
     }
 
-    const numericRating = rating !== undefined ? Number(rating) : null;
+    const numericRating = rating !== undefined ? Number(rating) : undefined;
 
-    db.prepare('INSERT INTO feedback_messages (message, rating) VALUES (?, ?)')
-      .run(message, numericRating);
+    await FeedbackMessage.create({ message, rating: numericRating });
 
     res.json({ success: true, message: 'Your feedback has been stored successfully.' });
   } catch (err) {

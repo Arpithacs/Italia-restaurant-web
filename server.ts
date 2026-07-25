@@ -1,9 +1,13 @@
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import app from './server/app';
+import { connectDB } from './server/db';
 
 async function startServer() {
   const PORT = 3000;
+
+  // Initialize MongoDB connection
+  await connectDB();
 
   // Vite static/middleware rendering configuration
   if (process.env.NODE_ENV !== 'production') {

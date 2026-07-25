@@ -1,57 +1,50 @@
-import * as fs from 'fs';
-import * as path from 'path';
-
-// Override database path before any database connection starts
-const testDbPath = path.join(process.cwd(), 'test_orders.sqlite');
-process.env.DATABASE_PATH = testDbPath;
-process.env.JWT_SECRET = 'test-suite-super-secret-key-99999';
-
 import request from 'supertest';
 import jwt from 'jsonwebtoken';
-import app from '../server/app';
-import db, { seedDatabase } from '../server/db';
 import bcrypt from 'bcryptjs';
+import mongoose from 'mongoose';
+import app from '../server/app';
+import { connectDB, seedDatabase } from '../server/db';
+import { MenuItem } from '../server/models/MenuItem';
+import { User } from '../server/models/User';
 
 describe('Orders Processing Suite', () => {
   let authToken: string;
-  let testUserId: number;
+  let testUserId: string;
   let menuItems: any[] = [];
 
   beforeAll(async () => {
-    // Seed and prepare database
-    seedDatabase();
-    
+    process.env.JWT_SECRET = 'test-suite-super-secret-key-99999';
+    await connectDB();
+    await seedDatabase();
+
     // Select all seeded dishes
-    menuItems = db.prepare('SELECT id, name, price FROM menu_items').all();
+    menuItems = await MenuItem.find();
 
     // Create a mock user
     const email = 'orderTestUser@example.com';
     const pwdHash = await bcrypt.hash('password123', 10);
-    const userInsert = db.prepare('INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)')
-      .run('Test Order Client', email, pwdHash);
-    
-    testUserId = Number(userInsert.lastInsertRowid);
+    const user = await User.create({
+      name: 'Test Order Client',
+      email,
+      passwordHash: pwdHash
+    });
+
+    testUserId = user._id.toString();
 
     // Create valid auth token
     const payload = { id: testUserId, email, name: 'Test Order Client' };
-    authToken = jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn: '1h' });
+    authToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
   });
 
-  afterAll(() => {
-    db.close();
-    if (fs.existsSync(testDbPath)) {
-      try {
-        fs.unlinkSync(testDbPath);
-      } catch (err) {
-        console.error('Failed to clean up test database file:', err);
-      }
+  afterAll(async () => {
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
     }
   });
 
   it('should successfully place a standard order and compute price total server-side', async () => {
-    // We order 2 of item #0 and 1 of item #1
-    const firstItem = menuItems[0];  // price typically 450
-    const secondItem = menuItems[1]; // price typically 500
+    const firstItem = menuItems[0];
+    const secondItem = menuItems[1];
     const expectedTotal = (firstItem.price * 2) + (secondItem.price * 1);
 
     const res = await request(app)
@@ -59,8 +52,8 @@ describe('Orders Processing Suite', () => {
       .set('Authorization', `Bearer ${authToken}`)
       .send({
         items: [
-          { menuItemId: firstItem.id, quantity: 2, customization: 'Thin crust' },
-          { menuItemId: secondItem.id, quantity: 1, customization: 'No cheese' }
+          { menuItemId: firstItem._id.toString(), quantity: 2, customization: 'Thin crust' },
+          { menuItemId: secondItem._id.toString(), quantity: 1, customization: 'No cheese' }
         ]
       });
 
@@ -90,7 +83,7 @@ describe('Orders Processing Suite', () => {
       .post('/api/orders')
       .send({
         items: [
-          { menuItemId: menuItems[0].id, quantity: 1 }
+          { menuItemId: menuItems[0]._id.toString(), quantity: 1 }
         ]
       });
 

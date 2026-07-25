@@ -1,55 +1,20 @@
-# Italia Restaurant — Full-Stack Ordering App
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
+</div>
 
-A full-stack restaurant ordering web application with user authentication, menu browsing, cart management, order placement, order history, and customer feedback.
+# Run and deploy your AI Studio app
 
-## Features
+This contains everything you need to run your app locally.
 
-- **User authentication** — signup/login with JWT-based sessions and bcrypt password hashing
-- **Menu browsing** — view dishes with details and customization options
-- **Cart & checkout** — add items, customize orders, and place them
-- **Order history** — view past orders per user
-- **Contact & feedback forms** — persisted to the database
-- **Automated tests** — Jest + Supertest coverage for auth, menu, and order routes
+View your app in AI Studio: https://ai.studio/apps/2ed667b5-45b2-4607-a435-ed26a8113e22
 
-## Tech Stack
+## Run Locally
 
-**Frontend:** React 19, TypeScript, React Router, Tailwind CSS, Vite
-**Backend:** Node.js, Express, better-sqlite3
-**Auth:** JWT, bcrypt
-**Testing:** Jest, Supertest
+**Prerequisites:**  Node.js
 
-## Project Structure
-
-```
-src/
-  components/    UI components (Menu, Cart, Header, Footer, etc.)
-  context/       Auth and Cart context providers
-  api/           API client for backend communication
-server/
-  routes/        Express route handlers (auth, menu, orders, contact, feedback)
-  middleware/    Auth middleware
-  db.ts          Database schema and connection
-tests/           Jest test suites
-```
-
-## Running Locally
-
-**Prerequisites:** Node.js
 
 1. Install dependencies:
-   ```
-   npm install
-   ```
-2. Copy `.env.example` to `.env` and fill in the required values.
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
-   ```
-   npm run dev
-   ```
-4. Run tests:
-   ```
-   npm test
-   ```
-
-## Database Schema
-
-The app uses SQLite with the following core tables: `users`, `menu_items`, `orders`, `order_items`, `contact_messages`, and `feedback_messages`, with foreign key relationships linking orders to users and order items to both orders and menu items.
+   `npm run dev`
