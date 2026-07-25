@@ -48,7 +48,7 @@ export default function Contact() {
         <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight text-brand-ink leading-tight uppercase animate-fade-in">
           Keep in Touch with Us
         </h1>
-        <p className="text-stone-500 mt-2 text-xs font-sans max-w-md mx-auto leading-relaxed">
+        <p className="text-stone-600 mt-2 text-xs font-sans max-w-md mx-auto leading-relaxed">
           Have an upcoming corporate event, wedding or private reservation request? Fill in our traditional liaison ledger below!
         </p>
       </div>
@@ -56,10 +56,10 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
         
         {/* Contact info list card */}
-        <div className="bg-stone-900 text-white rounded-[4px] p-8 flex flex-col justify-between space-y-8 border border-stone-800 shadow-none">
+        <div className="bg-brand-dark text-white rounded-[4px] p-8 flex flex-col justify-between space-y-8 border border-white/10 shadow-none">
           <div className="space-y-6">
-            <h3 className="font-mono font-bold text-xs uppercase tracking-widest text-white border-b border-stone-800 pb-3">// Contact Ledger</h3>
-            <p className="text-[11px] text-stone-400 leading-relaxed font-sans">
+            <h3 className="font-mono font-bold text-xs uppercase tracking-widest text-white border-b border-white/15 pb-3">// Contact Ledger</h3>
+            <p className="text-[11px] text-stone-300 leading-relaxed font-sans">
               Our support staff and events coordinators read and log messages throughout working hours. Expect a response on your email within 4 hours.
             </p>
           </div>
@@ -68,29 +68,29 @@ export default function Contact() {
             <div className="flex gap-4">
               <MapPin className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
               <div>
-                <span className="block font-sans font-bold text-xs text-stone-200">Ristorante Venue</span>
-                <span className="block text-stone-400 mt-1">83 Via dei Tribunali, Napoli, Campania, IT</span>
+                <span className="block font-sans font-bold text-xs text-stone-100">Ristorante Venue</span>
+                <span className="block text-stone-300 mt-1">83 Via dei Tribunali, Napoli, Campania, IT</span>
               </div>
             </div>
 
             <div className="flex gap-4">
               <Phone className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
               <div>
-                <span className="block font-sans font-bold text-xs text-stone-200">Fast Helpline</span>
-                <span className="block text-stone-400 mt-1">+39 081 294 3829</span>
+                <span className="block font-sans font-bold text-xs text-stone-100">Fast Helpline</span>
+                <span className="block text-stone-300 mt-1">+39 081 294 3829</span>
               </div>
             </div>
 
             <div className="flex gap-4">
               <Mail className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
               <div>
-                <span className="block font-sans font-bold text-xs text-stone-200">Catering Direct</span>
-                <span className="block text-stone-400 mt-1">ciao@italia-ristorante.com</span>
+                <span className="block font-sans font-bold text-xs text-stone-100">Catering Direct</span>
+                <span className="block text-stone-300 mt-1">ciao@italia-ristorante.com</span>
               </div>
             </div>
           </div>
 
-          <p className="text-[9px] text-stone-500 font-sans uppercase tracking-wider pt-4 border-t border-stone-800">
+          <p className="text-[9px] text-stone-400 font-sans uppercase tracking-wider pt-4 border-t border-white/15">
             * Options are powered securely by local database nodes.
           </p>
         </div>
@@ -107,7 +107,7 @@ export default function Contact() {
                 <Check className="w-5 h-5" />
               </div>
               <h3 className="font-mono font-bold text-xs uppercase tracking-widest text-[#111]">Message Dispatched!</h3>
-              <p className="text-xs text-stone-500 max-w-sm leading-relaxed font-sans">
+              <p className="text-xs text-stone-600 max-w-sm leading-relaxed font-sans">
                 Thank you! Your contact card was stored into our relational node system. Our event support manager is reviewing and will dispatch an email summary to you shortly.
               </p>
               <button
@@ -131,7 +131,7 @@ export default function Contact() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">
+                  <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-600">
                     Your Name
                   </label>
                   <input
@@ -145,7 +145,7 @@ export default function Contact() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">
+                  <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-600">
                     Email Address
                   </label>
                   <input
@@ -160,7 +160,7 @@ export default function Contact() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500">
+                <label className="block text-[10px] font-mono font-bold uppercase tracking-widest text-stone-600">
                   Your Message
                 </label>
                 <textarea

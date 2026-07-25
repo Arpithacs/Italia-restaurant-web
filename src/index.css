@@ -1,26 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", "Georgia", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* Geometric Balance Themed Colors */
-  --color-brand-bg: #FAF9F6;           /* Soft Alabaster Cream */
-  --color-brand-ink: #1A1A1A;          /* Deep Charcoal Ink */
-  --color-brand-primary: #A62C2B;      /* Terracotta / Crimson Accent Red */
-  --color-brand-hover: #80201F;        /* Crimson Red Hover */
-  --color-brand-green: #2D5A27;        /* Muted Forest Green */
-  --color-brand-border: #E5E4E0;       /* Soft Light Chalk Border */
-  --color-brand-gold: #b45309;         /* Italian Gold Accent */
-  --color-brand-accent: #FAF9F6;
+  /* Soft & Minimal Color Palette */
+  --color-brand-bg: #F8F7F4;           /* Warm Linen White */
+  --color-brand-ink: #26211C;          /* Deep Espresso Black */
+  --color-brand-primary: #94644D;      /* Rich Terracotta */
+  --color-brand-hover: #7D5340;        /* Deep Clay Hover */
+  --color-brand-green: #6B9466;        /* Balanced Sage — readable on both light and dark */
+  --color-brand-border: #DDD7CE;       /* Warm Oat Border */
+  --color-brand-gold: #A67F42;         /* Rich Honey Gold */
+  --color-brand-dark: #4A3F36;         /* Rich Espresso */
+  --color-brand-accent: #F8F7F4;
   --color-brand-card-bg: #FFFFFF;
 }
 
 @layer base {
   body {
-    @apply font-sans bg-brand-bg text-brand-ink antialiased selection:bg-rose-100 selection:text-brand-primary;
+    @apply font-sans bg-brand-bg text-brand-ink antialiased selection:bg-brand-primary/15 selection:text-brand-ink;
   }
 }
 
@@ -33,10 +34,10 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #E5E4E0;
+  background: #DDD7CE;
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A62C2B;
+  background: #94644D;
 }
 

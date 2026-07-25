@@ -47,7 +47,7 @@ export default function Feedback() {
         <h1 className="text-3xl md:text-4xl font-display font-extrabold tracking-tight text-brand-ink leading-tight uppercase animate-fade-in">
           Customer Opinions Ledger
         </h1>
-        <p className="text-stone-500 mt-2 text-xs font-sans max-w-md mx-auto leading-relaxed">
+        <p className="text-stone-600 mt-2 text-xs font-sans max-w-md mx-auto leading-relaxed">
           We gather and honor customer recommendations. Help us fine-tune our baking temperature, crust thickness, and delivery speeds!
         </p>
       </div>
@@ -63,7 +63,7 @@ export default function Feedback() {
               <Check className="w-5 h-5" />
             </div>
             <h3 className="font-mono font-bold text-xs uppercase tracking-widest text-[#111]">Grazie Mille!</h3>
-            <p className="text-xs text-stone-500 max-w-sm leading-relaxed">
+            <p className="text-xs text-stone-600 max-w-sm leading-relaxed">
               Grazie! Your stars and review card have been stored successfully. We share reviews in kitchen logs to encourage our bakers!
             </p>
             <button

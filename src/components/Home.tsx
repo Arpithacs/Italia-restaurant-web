@@ -20,17 +20,17 @@ export default function Home() {
     <div className="overflow-hidden">
       
       {/* Hero Section */}
-      <section className="relative bg-stone-900 text-white min-h-[90vh] flex items-center justify-center py-20 px-4 md:px-8">
+      <section className="relative bg-brand-dark text-white min-h-[90vh] flex items-center justify-center py-20 px-4 md:px-8">
         
         {/* Background Image Accent Mask */}
         <div className="absolute inset-0 z-0">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&auto=format&fit=crop&q=80"
             alt="Classic Italian Table"
-            className="w-full h-full object-cover opacity-20 filter brightness-50"
+            className="w-full h-full object-cover opacity-30 filter brightness-75"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-900/80 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark via-brand-dark/70 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center">
@@ -64,7 +64,7 @@ export default function Home() {
             {/* Sub-headline */}
             <motion.p
               variants={itemVariants}
-              className="text-sm md:text-base text-stone-300 max-w-3xl mx-auto leading-relaxed font-sans"
+              className="text-sm md:text-base text-stone-200 max-w-3xl mx-auto leading-relaxed font-sans"
             >
               Hand-pressed brick oven pizzas, creamy slow-cooked lasagna bolognese, and silky sweet tiramisu whipped fresh daily. Sourced locally, baked in stone.
             </motion.p>
@@ -83,7 +83,7 @@ export default function Home() {
               </Link>
               <Link
                 to="/about"
-                className="w-full sm:w-auto bg-transparent hover:bg-white/5 text-stone-200 font-mono font-bold uppercase tracking-widest text-xs py-4 px-10 rounded-[4px] border border-stone-700 text-center duration-200"
+                className="w-full sm:w-auto bg-transparent hover:bg-white/10 text-stone-100 font-mono font-bold uppercase tracking-widest text-xs py-4 px-10 rounded-[4px] border border-white/20 text-center duration-200"
               >
                 Our Heritage
               </Link>
@@ -113,7 +113,7 @@ export default function Home() {
                 <Award className="w-6 h-6" />
               </div>
               <h4 className="text-base font-display font-bold text-brand-ink mb-2">Family Recipes Only</h4>
-              <p className="text-xs text-stone-500 leading-relaxed">
+              <p className="text-xs text-stone-600 leading-relaxed">
                 Zero mimics, zero compromises. Our marinara bases are slowly simmered across 8 hours according to grandma Isabella's handwritten recipes.
               </p>
             </div>
@@ -124,7 +124,7 @@ export default function Home() {
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h4 className="text-base font-display font-bold text-brand-ink mb-2">100% Organic Sourcing</h4>
-              <p className="text-xs text-stone-500 leading-relaxed">
+              <p className="text-xs text-stone-600 leading-relaxed">
                 Double-zero caputo flours, PDO San Marzano tomatoes, and creamy fresh cow mozzarella delivered straight from local artisan farms each morning.
               </p>
             </div>
@@ -135,7 +135,7 @@ export default function Home() {
                 <Truck className="w-6 h-6" />
               </div>
               <h4 className="text-base font-display font-bold text-brand-ink mb-2">Fresh Cooking Guarantee</h4>
-              <p className="text-xs text-stone-500 leading-relaxed">
+              <p className="text-xs text-stone-600 leading-relaxed">
                 We never store pre-baked doughs. Every pizza enters our 800°F lava-stone furnace only after you submit your checkout.
               </p>
             </div>
@@ -145,13 +145,13 @@ export default function Home() {
       </section>
 
       {/* Culinary Banner Block Section */}
-      <section className="bg-stone-950 text-white overflow-hidden">
+      <section className="bg-brand-dark text-white overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-2">
           <div className="relative min-h-[400px]">
             <img
               src="https://images.unsplash.com/photo-1598103442097-8b74394b98c6?w=800&auto=format&fit=crop&q=80"
               alt="Artisanal Baking Process"
-              className="absolute inset-0 w-full h-full object-cover filter brightness-90 saturate-50"
+              className="absolute inset-0 w-full h-full object-cover filter brightness-75 saturate-90"
               referrerPolicy="no-referrer"
             />
           </div>
@@ -162,10 +162,10 @@ export default function Home() {
             <h3 className="text-3xl md:text-5xl font-display font-black tracking-tight leading-tight">
               A Warm Promise and a Crispy Crust
             </h3>
-            <p className="text-sm text-stone-400 leading-relaxed">
+            <p className="text-sm text-stone-300 leading-relaxed">
               Our traditional baking process starts with hydrated high-protein dough left to slowly rise across 48 cold-fermented hours. This forms complex yeast cellular profiles which caramelize beautifully under our high gas-fired lava stones, creating a light, digestible crust with exquisite crunch.
             </p>
-            <div className="pt-4 border-t border-stone-800 flex gap-6 text-xs text-stone-500 font-mono">
+            <div className="pt-4 border-t border-white/15 flex gap-6 text-xs text-stone-300 font-mono">
               <div>
                 <span className="block text-2xl font-bold text-white font-sans">48h</span>
                 Cold Fermentation

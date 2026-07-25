@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Shield, Award, Sparkles, Check, Flame, X } from 'lucide-react';
+import { User, Mail, Shield, Award, LogOut, X } from 'lucide-react';
 import { apiClient } from '../api/client';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -11,6 +11,7 @@ interface Order {
 interface ProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onLogout: () => void;
   user: {
     id: number;
     name: string;
@@ -18,13 +19,9 @@ interface ProfileModalProps {
   };
 }
 
-export default function ProfileModal({ isOpen, onClose, user }: ProfileModalProps) {
+export default function ProfileModal({ isOpen, onClose, onLogout, user }: ProfileModalProps) {
   const [orders, setOrders] = useState<Order[]>([]);
   const [isFetchingStats, setIsFetchingStats] = useState<boolean>(true);
-  const [preferredTaste, setPreferredTaste] = useState<string>(() => {
-    return localStorage.getItem(`preferred_taste_${user.id}`) || 'savory';
-  });
-  const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -50,15 +47,6 @@ export default function ProfileModal({ isOpen, onClose, user }: ProfileModalProp
       active = false;
     };
   }, [isOpen, user.id]);
-
-  const handleSavePref = (taste: string) => {
-    setPreferredTaste(taste);
-    localStorage.setItem(`preferred_taste_${user.id}`, taste);
-    setSavedSuccess(true);
-    setTimeout(() => {
-      setSavedSuccess(false);
-    }, 2000);
-  };
 
   const calculatedTotalSpent = orders.reduce((sum, order) => sum + (order.total || 0), 0);
   const formattedTotalSpent = `$${(calculatedTotalSpent / 100).toFixed(2)}`;
@@ -114,7 +102,7 @@ export default function ProfileModal({ isOpen, onClose, user }: ProfileModalProp
                 <h3 className="font-display font-bold text-lg text-brand-ink uppercase tracking-tight truncate">
                   {user.name}
                 </h3>
-                <span className="flex items-center justify-center sm:justify-start gap-1.5 text-stone-500 font-mono text-xs mt-1 truncate">
+                <span className="flex items-center justify-center sm:justify-start gap-1.5 text-stone-600 font-mono text-xs mt-1 truncate">
                   <Mail className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                   {user.email}
                 </span>
@@ -161,52 +149,25 @@ export default function ProfileModal({ isOpen, onClose, user }: ProfileModalProp
               </div>
             </div>
 
-            {/* Taste preference configuration */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="font-mono text-[10px] uppercase font-extrabold tracking-widest text-stone-400 flex items-center gap-1">
-                  <Sparkles className="w-3 h-3 text-brand-primary" />
-                  Gourmet Taste Profile Preference
-                </h4>
-                {savedSuccess && (
-                  <span className="font-mono text-[9px] text-brand-green tracking-wide uppercase font-bold flex items-center gap-0.5">
-                    <Check className="w-3 h-3" /> SAVED
-                  </span>
-                )}
-              </div>
-              <p className="text-[11px] text-stone-500 mb-3 leading-relaxed">
-                Configure your dominant flavor preference. We will prioritize showcasing curated recipes under this spectrum.
-              </p>
-              
-              <div className="grid grid-cols-3 gap-2 text-xs font-mono">
-                {['savory', 'sweet', 'spicy', 'bitter', 'sour'].map((taste) => (
-                  <button
-                    key={taste}
-                    onClick={() => handleSavePref(taste)}
-                    className={`py-2 px-3 border rounded-[4px] font-bold text-[10px] uppercase tracking-wider transition-all cursor-pointer ${
-                      preferredTaste === taste
-                        ? 'bg-brand-ink text-white border-brand-ink'
-                        : 'bg-white hover:bg-brand-bg text-stone-600 border-brand-border hover:border-stone-400'
-                    }`}
-                  >
-                    <div className="flex items-center justify-center gap-1.5">
-                      {taste === 'spicy' && <Flame className="w-3 h-3 text-brand-primary shrink-0" />}
-                      <span>{taste}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
           </div>
 
           {/* Footer controls */}
-          <div className="bg-brand-bg border-t border-brand-border-light p-4 px-6 text-right">
+          <div className="bg-brand-bg border-t border-brand-border p-4 px-6 flex items-center justify-between gap-3">
+            <button
+              onClick={() => {
+                onLogout();
+                onClose();
+              }}
+              className="flex items-center gap-1.5 text-brand-primary hover:text-brand-hover font-mono text-[10px] uppercase tracking-wider font-bold py-2.5 px-4 rounded-[4px] border border-brand-primary/20 hover:bg-brand-primary/5 transition-colors cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Sign Out
+            </button>
             <button
               onClick={onClose}
-              className="bg-brand-ink hover:bg-brand-primary text-white font-mono text-[10px] uppercase tracking-wider font-bold py-2.5 px-6 rounded-[4px] cursor-pointer"
+              className="bg-brand-ink hover:bg-brand-primary text-white font-mono text-[10px] uppercase tracking-wider font-bold py-2.5 px-6 rounded-[4px] cursor-pointer transition-colors"
             >
-              Close Profile window
+              Close Profile
             </button>
           </div>
         </motion.div>

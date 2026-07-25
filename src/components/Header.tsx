@@ -1,7 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+ import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
-import { ShoppingCart, LogOut, User, Utensils, MessageSquare, PhoneCall, Info, History } from 'lucide-react';
+import { ShoppingCart, User, Utensils, MessageSquare, PhoneCall, Info, History } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useState } from 'react';
 import ProfileModal from './ProfileModal';
@@ -104,14 +104,6 @@ export default function Header() {
                   <User className="w-3.5 h-3.5 text-brand-green" />
                   <span>Hello, {user.name.split(' ')[0]}</span>
                 </div>
-                <button
-                  onClick={logout}
-                  className="flex items-center gap-1.5 hover:text-brand-primary font-mono font-semibold uppercase tracking-wide text-[10px] text-stone-500 py-1.5 px-2.5 rounded-[4px] border border-transparent hover:border-brand-border transition-colors"
-                  title="Logout"
-                >
-                  <LogOut className="w-3.5 h-3.5" />
-                  Sign Out
-                </button>
               </div>
             ) : (
               <Link
@@ -193,16 +185,6 @@ export default function Header() {
                     <History className="w-4 h-4 text-brand-primary" />
                     My Orders
                   </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setMobileOpen(false);
-                    }}
-                    className="w-full text-center py-2.5 px-4 rounded-[4px] border border-brand-primary text-brand-primary hover:bg-brand-bg font-mono font-bold text-xs uppercase tracking-widest transition-colors flex items-center justify-center gap-1.5"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Sign Out
-                  </button>
                 </>
               ) : (
                 <Link
@@ -221,6 +203,7 @@ export default function Header() {
         <ProfileModal
           isOpen={profileOpen}
           onClose={() => setProfileOpen(false)}
+          onLogout={logout}
           user={user}
         />
       )}

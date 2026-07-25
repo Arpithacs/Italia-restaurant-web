@@ -83,7 +83,7 @@ export default function Menu() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
         <div className="w-6 h-6 border-2 border-brand-primary border-t-transparent animate-spin" />
-        <span className="font-mono text-[10px] text-stone-500 uppercase tracking-widest">Loading Ristorante Menu...</span>
+        <span className="font-mono text-[10px] text-stone-600 uppercase tracking-widest">Loading Ristorante Menu...</span>
       </div>
     );
   }
@@ -125,7 +125,7 @@ export default function Menu() {
         <h1 className="text-3xl md:text-5xl font-display font-black tracking-tight text-brand-ink leading-none uppercase">
           Explore Our Menu Ledger
         </h1>
-        <p className="text-stone-500 mt-3 leading-relaxed text-xs md:text-sm max-w-xl font-sans">
+        <p className="text-stone-600 mt-3 leading-relaxed text-xs md:text-sm max-w-xl font-sans">
           Savor the finest Italian dishes cooked inside our traditional high-temperature wood oven. Tap any dish for customized ingredients options!
         </p>
       </div>
@@ -154,7 +154,7 @@ export default function Menu() {
             key={selectedTaste}
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mt-3 p-3 bg-brand-bg border border-brand-border rounded-[2px] text-stone-500 font-mono text-[10px] uppercase tracking-wide"
+            className="mt-3 p-3 bg-brand-bg border border-brand-border rounded-[2px] text-stone-600 font-mono text-[10px] uppercase tracking-wide"
           >
             <span className="text-brand-primary font-bold mr-1">// {activeTasteInfo.label} profile:</span> {activeTasteInfo.desc}
           </motion.div>
@@ -189,7 +189,7 @@ export default function Menu() {
                   {formatPrice(item.price)}
                 </div>
                 {/* Micro taste indicator */}
-                <div className="absolute bottom-2 left-2 bg-brand-ink/80 backdrop-blur-xs border border-stone-800 text-white font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-[1px]">
+                <div className="absolute bottom-2 left-2 bg-brand-dark/80 backdrop-blur-xs border border-white/10 text-white font-mono text-[8px] uppercase tracking-wider px-1.5 py-0.5 rounded-[1px]">
                   {item.taste}
                 </div>
               </div>
@@ -200,7 +200,7 @@ export default function Menu() {
                   <h4 className="text-base font-display font-bold text-brand-ink leading-tight group-hover:text-brand-primary transition-colors uppercase">
                     {item.name}
                   </h4>
-                  <p className="text-xs text-stone-500 line-clamp-3 leading-relaxed font-sans">
+                  <p className="text-xs text-stone-600 line-clamp-3 leading-relaxed font-sans">
                     {item.description}
                   </p>
                 </div>
@@ -233,7 +233,7 @@ export default function Menu() {
       
       {filteredMenu.length === 0 && (
         <div className="text-center py-12 p-6 border border-dashed border-brand-border rounded-[4px] bg-brand-bg/50">
-          <p className="font-mono text-xs text-stone-500 uppercase tracking-widest">// No items found matching taste filter</p>
+          <p className="font-mono text-xs text-stone-600 uppercase tracking-widest">// No items found matching taste filter</p>
         </div>
       )}
     </div>

@@ -68,7 +68,7 @@ export default function OrderConfirmation() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
         <div className="w-10 h-10 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
-        <span className="font-mono text-xs text-stone-500 tracking-wider">Generating Confirmation Invoice...</span>
+        <span className="font-mono text-xs text-stone-600 tracking-wider">Generating Confirmation Invoice...</span>
       </div>
     );
   }
@@ -116,7 +116,7 @@ export default function OrderConfirmation() {
             <Truck className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
             <div>
               <span className="block font-mono font-bold text-[10px] text-brand-ink uppercase tracking-widest leading-none">Rider Support</span>
-              <span className="block text-[11px] text-stone-500 mt-1 font-sans">Sandro R. (Express Moto)</span>
+              <span className="block text-[11px] text-stone-600 mt-1 font-sans">Sandro R. (Express Moto)</span>
             </div>
           </div>
 
@@ -132,7 +132,7 @@ export default function OrderConfirmation() {
             <MapPin className="w-4 h-4 text-brand-primary shrink-0 mt-0.5" />
             <div>
               <span className="block font-mono font-bold text-[10px] text-brand-ink uppercase tracking-widest leading-none">Transit route</span>
-              <span className="block text-[11px] text-stone-500 mt-1 font-sans">Live tracking enabled</span>
+              <span className="block text-[11px] text-stone-600 mt-1 font-sans">Live tracking enabled</span>
             </div>
           </div>
         </div>
@@ -142,7 +142,7 @@ export default function OrderConfirmation() {
           <div className="flex items-center justify-between pb-4 border-b border-brand-border">
             <div>
               <h3 className="font-mono font-bold text-xs uppercase tracking-widest text-[#111]">Receipt Statement</h3>
-              <span className="text-[10px] font-mono text-stone-500">Order Ref #: {order.id}</span>
+              <span className="text-[10px] font-mono text-stone-600">Order Ref #: {order.id}</span>
             </div>
             <span className="text-[10px] font-mono font-bold uppercase tracking-widest bg-brand-bg py-1 px-3 border border-brand-border rounded-[2px] text-stone-600">
               Ref Status: {order.status}
@@ -181,7 +181,7 @@ export default function OrderConfirmation() {
 
           {/* Totals footer */}
           <div className="pt-6 border-t border-brand-border space-y-3.5 text-xs font-mono uppercase tracking-wider">
-            <div className="flex justify-between text-stone-500 font-medium">
+            <div className="flex justify-between text-stone-600 font-medium">
               <span>Baking Oven Dispatch</span>
               <span className="text-brand-green font-bold">Included</span>
             </div>

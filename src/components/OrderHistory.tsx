@@ -103,7 +103,7 @@ export default function OrderHistory() {
         </div>
         <div>
           <h1 className="text-xl font-display font-bold text-brand-ink uppercase tracking-wider">Authentication Required</h1>
-          <p className="text-stone-500 mt-2 text-xs leading-relaxed max-w-sm font-sans">
+          <p className="text-stone-600 mt-2 text-xs leading-relaxed max-w-sm font-sans">
             Please log in or register an account with us to view active deliveries, check order slips, and inspect past dining history.
           </p>
         </div>
@@ -122,7 +122,7 @@ export default function OrderHistory() {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
         <div className="w-6 h-6 border-2 border-brand-primary border-t-transparent animate-spin" />
-        <span className="font-mono text-[10px] text-stone-500 uppercase tracking-widest">// SECURING RECORD ARCHIVES...</span>
+        <span className="font-mono text-[10px] text-stone-600 uppercase tracking-widest">// SECURING RECORD ARCHIVES...</span>
       </div>
     );
   }
@@ -158,11 +158,11 @@ export default function OrderHistory() {
           <h1 className="text-2xl md:text-3xl font-display font-black text-brand-ink tracking-tight uppercase">
             Your Order History
           </h1>
-          <sub className="text-[10px] text-stone-500 font-mono uppercase tracking-widest block mt-1">// Archivio Storico degli Ordini</sub>
+          <sub className="text-[10px] text-stone-600 font-mono uppercase tracking-widest block mt-1">// Archivio Storico degli Ordini</sub>
         </div>
         <Link
           to="/menu"
-          className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-500 hover:text-brand-primary transition-colors flex items-center gap-1"
+          className="text-[10px] font-mono font-bold uppercase tracking-widest text-stone-600 hover:text-brand-primary transition-colors flex items-center gap-1"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Back to Menu
@@ -179,7 +179,7 @@ export default function OrderHistory() {
             <Package className="w-5 h-5" />
           </div>
           <h3 className="font-display font-bold text-brand-ink text-base uppercase tracking-wider">No Past Transactions</h3>
-          <p className="text-stone-500 mt-2 text-xs leading-relaxed font-sans max-w-xs mb-8">
+          <p className="text-stone-600 mt-2 text-xs leading-relaxed font-sans max-w-xs mb-8">
             Our traditional ledger contains no culinary orders registered to your name yet. Head back to our Napoli brick-oven selector and build your first masterpiece!
           </p>
           <Link
@@ -237,7 +237,7 @@ export default function OrderHistory() {
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-cover saturate-75"
+                        className="w-full h-full object-cover saturate-90"
                         referrerPolicy="no-referrer"
                       />
                     </div>
