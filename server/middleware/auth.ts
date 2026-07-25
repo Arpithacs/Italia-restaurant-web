@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'italia-fallback-secret-key-12345';
+import { JWT_SECRET } from '../config';
 
 export interface AuthenticatedRequest extends Request {
   user?: {

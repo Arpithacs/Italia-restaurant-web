@@ -3,9 +3,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import { authMiddleware, AuthenticatedRequest } from '../middleware/auth';
+import { JWT_SECRET } from '../config';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'italia-fallback-secret-key-12345';
 
 // Helper to validate email format
 const isValidEmail = (email: string): boolean => {

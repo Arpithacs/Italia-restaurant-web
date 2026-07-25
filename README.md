@@ -55,11 +55,11 @@ The app runs as a **single server**: Express mounts Vite as middleware in dev (o
 | Variable | Required | Notes |
 |---|---|---|
 | `MONGODB_URI` | No | If unset, an in-memory MongoDB instance is spun up automatically and the menu is auto-seeded |
-| `JWT_SECRET` | Recommended | Falls back to a hardcoded dev secret (`italia-fallback-secret-key-12345`) if unset — **set this in production** |
+| `JWT_SECRET` | **Yes** (production) | **Required in production** — the server will throw at startup if unset. In development, a loud warning is logged and an insecure fallback is used. Generate with `openssl rand -hex 32`. |
 | `GEMINI_API_KEY` | No (unless using Gemini features) | Listed in `.env.example`; used if/when Gemini API calls are added |
 | `APP_URL` | No | Used for self-referential links; auto-injected when hosted on AI Studio / Cloud Run |
 
-> ⚠️ The default `JWT_SECRET` fallback is committed in source and should never be relied on outside local development.
+> ⚠️ In production, `JWT_SECRET` is **mandatory** — the server refuses to start without it. In development/test, a clearly-labelled insecure fallback is used and a warning is printed to the console.
 
 ## API Reference
 
