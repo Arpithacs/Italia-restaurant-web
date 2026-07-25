@@ -2,7 +2,7 @@ import { useEffect, useState, FormEvent } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { apiClient } from '../api/client';
-import { ChevronLeft, ShoppingCart, Sliders, CheckSquare, Plus, Minus } from 'lucide-react';
+import { ChevronLeft, ShoppingBag, Sliders, CheckSquare, Plus, Minus } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface MenuItem {
@@ -295,7 +295,7 @@ export default function OrderCustomization() {
               type="submit"
               className="w-full py-4 px-6 rounded-[4px] bg-brand-primary hover:bg-brand-hover text-white font-mono font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-2 border border-transparent shadow-none"
             >
-              <ShoppingCart className="w-3.5 h-3.5" />
+              <ShoppingBag className="w-3.5 h-3.5" />
               Add to Cart — {formatPrice(item.price * quantity + (extraCheese ? 150 * quantity : 0))}
             </button>
           </div>

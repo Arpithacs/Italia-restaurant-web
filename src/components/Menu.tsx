@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { apiClient } from '../api/client';
-import { Utensils, Sliders } from 'lucide-react';
+import { Utensils, Sliders, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface MenuItem {
@@ -209,13 +209,20 @@ export default function Menu() {
                 <div className="flex items-center gap-2 pt-4 mt-5 border-t border-brand-border animate-inputs">
                   <button
                     onClick={() => handleQuickAdd(item)}
-                    className={`flex-grow py-2 px-3 rounded-[4px] font-mono text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer ${
+                    className={`flex-grow py-2 px-3 rounded-[4px] font-mono text-[10px] uppercase tracking-wider font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       addedItemId === item.id
                         ? 'bg-brand-green text-white'
                         : 'bg-brand-ink hover:bg-brand-primary text-white'
                     }`}
                   >
-                    {addedItemId === item.id ? '✓ Added' : 'Quick Add'}
+                    {addedItemId === item.id ? (
+                      '✓ Added'
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-3.5 h-3.5" />
+                        Quick Add
+                      </>
+                    )}
                   </button>
                   <Link
                     to={`/order/${item.id}`}
